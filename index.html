@@ -1742,7 +1742,7 @@ SLIDES2.push(
   ['','40','첨단 과학 원리 작성을 통해 과학원리를 설명하나 조금 부족함<br>글쓰기를 통해 자신의 생각을 잘 드러냄.'],
   ['','30','첨단 과학 원리 작성을 통해 과학원리를 설명하나 많이 부족함<br>글쓰기를 통해 자신의 생각을 부족하게 드러냄.'],
   ['','19','첨단 과학 원리 작성을 통해 과학원리에 대한 지식을 드러내지 않음.<br>글쓰기를 통해 자신의 생각을 드러내지 않음.']]},
- note:'※ 기본점수는 38점을 부여함.',
+ note:'기본점수는 38점을 부여함.',
  bottom:'원리 설명의 정확성과 자신의 생각을 읽고, 발표에서 그 내용을 명확하게 전달하는지 함께 평가합니다.',
  bottomline:'본문 작성과 발표 준비를 별개의 과제로 준비할 필요가 있습니다.',
  src:'경신고 과학탐구실험2.png'},
@@ -1929,8 +1929,8 @@ const PARTS2=[
 ];
 
 const esc2=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const fmt=t=>esc2(t).replace(/«([^»]*)»/g,'<mark>$1</mark>').replace(/\n/g,'<br>');
-const fmtb=t=>String(t==null?'':t).replace(/«([^»]*)»/g,'<mark>$1</mark>').replace(/\n/g,'<br>');
+const fmt=t=>esc2(t).replace(/«([^»]*)»/g,'<mark>$1</mark>').replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');
+const fmtb=t=>String(t==null?'':t).replace(/«([^»]*)»/g,'<mark>$1</mark>').replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');
 const p2=s=>s.photo?`img/${s.photo}`:`img/b2_s${String(s.id).padStart(2,'0')}.jpg`;
 function photoBtn2(s){
   const cap=(s.eyebrow?s.eyebrow+' · ':'')+`슬라이드 ${s.id} · ${String(s.title).replace(/<[^>]+>/g,'')}`;
@@ -1956,7 +1956,15 @@ function body2(s){
     case 'table':{
       const t=s.table;
       const cols=t.cols.map(c=>`<th>${esc2(c)}</th>`).join('');
-      const rows=t.rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i&&i>=1?'num':''}">${fmtb(c)}</td>`).join('')}</tr>`).join('');
+      /* 첫 열이 빈 칸이면 위 칸과 합쳐(rowspan) 한 평가요소가 여러 점수 줄을 묶게 함 */
+      const spans=t.rows.map(()=>0);
+      t.rows.forEach((r,ri)=>{ if(ri>0&&r[0]===''){ let k=ri-1; while(k>0&&t.rows[k][0]==='')k--; spans[k]++; } });
+      const cell=(c,i,ri)=>{
+        if(i===0&&c==='')return '';
+        const rs=(i===0&&spans[ri])?` rowspan="${spans[ri]+1}"`:'';
+        return `<td class="${i>=1?'num':''}"${rs}>${fmtb(c)}</td>`;
+      };
+      const rows=t.rows.map((r,ri)=>`<tr>${r.map((c,i)=>cell(c,i,ri)).join('')}</tr>`).join('');
       return `<div class="tw"><table class="${t.cols.length>=3?'wide':''}"><thead><tr>${cols}</tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     case 'cols':{
@@ -2005,7 +2013,7 @@ function body2(s){
 
 function renderSlide2(s){
   let inner=body2(s);
-  if(s.bar) inner=`<div class="hbar">▍ ${esc2(s.bar)}</div>`+inner;
+  if(s.bar) inner=`<div class="hbar">${esc2(s.bar)}</div>`+inner;
   let h;
   if(s.cover){
     h=`<div class="divider l2cover"><div class="lbl">${esc2(s.eyebrow||'')}</div><h2>${esc2(s.title)}</h2><p>${esc2(s.coverSub||s.meta||'')}</p>${photoBtn2(s)}</div>`
