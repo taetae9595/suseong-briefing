@@ -298,6 +298,26 @@ mark{background:#fff1bf;color:#7a3a00;padding:0 1px;border-radius:2px;font-weigh
 .divider .photobtn{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
 .divider .photobtn:hover{background:rgba(255,255,255,.14)}
 
+/* ── 🖼️ 원본 사진 주루룩 보기 ─────────────────────────────── */
+.pfilters{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:0 0 10px}
+.pf{flex:0 0 auto;border:1.5px solid var(--teal-l);background:#fff;color:var(--teal-d);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:800;cursor:pointer;transition:.15s;font-family:inherit}
+.pf .n{margin-left:5px;font-weight:700;color:var(--muted);font-size:11.5px}
+.pf.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.pf.on .n{color:#bfe4dc}
+.pnote{margin:0 0 16px;font-size:12.5px;color:var(--muted);line-height:1.55}
+.pgroup{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:9px 13px;background:#e7f0ee;border-left:4px solid var(--teal);border-radius:0 9px 9px 0;font-size:13.2px;font-weight:800;color:var(--teal-d);line-height:1.45}
+.pgroup .c{font-weight:700;color:#5d7078;font-size:11.8px;margin-left:auto}
+.pstrip{display:grid;gap:16px;max-width:760px;margin:0 auto}
+.pitem{margin:0}
+.pcap{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 6px;padding:0 2px}
+.pwho{flex:0 0 auto;font-size:10.8px;font-weight:800;letter-spacing:.02em;color:#fff;background:var(--teal);border-radius:6px;padding:2px 7px}
+.pwho.b2{background:#2f6b86}
+.pno{flex:0 0 auto;font-size:10.8px;font-weight:800;color:var(--teal-d);background:var(--teal-bg);border-radius:6px;padding:2px 7px;font-variant-numeric:tabular-nums}
+.pttl{font-size:12.4px;font-weight:700;color:#31454d;line-height:1.4}
+.pimg{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:10px}
+.pimg img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.pimg:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
 /* ── 잠금 화면 ───────────────────────────────────────────── */
 html.locked{overflow:hidden}
 /* 잠긴 동안에는 본문을 화면·화면읽기 어디에도 드러내지 않음 */
@@ -365,7 +385,7 @@ html:not(.locked) .lockbtn{display:inline-block}
   <div class="wrap">
     <p class="eyebrow">2026 고입 설명회 정리 · 두 편 통합</p>
     <h1>대구 수성구 고입 설명회 정리</h1>
-    <p class="sub">1차 <b>수성구 고1 내신·수행평가</b>(49장)와 2차 <b>학생부 구조·실제 합격 사례·학교 수행평가의 출제와 작성</b>(58장)을 한 주소에 모았습니다. 바로 아래 <b>강연 탭</b>에서 두 강연을 오갈 수 있고, 각 카드의 ‘▣ 원본 슬라이드’ 버튼으로 사진 원본을 확인할 수 있습니다. 표의 수치는 사진에 적힌 값 그대로이며, 슬라이드에 없는 값은 넣지 않았습니다.</p>
+    <p class="sub">1차 <b>수성구 고1 내신·수행평가</b>(49장)와 2차 <b>학생부 구조·실제 합격 사례·학교 수행평가의 출제와 작성</b>(58장)을 한 주소에 모았습니다. 바로 아래 <b>강연 탭</b>에서 두 강연을 오갈 수 있고, 각 카드의 ‘▣ 원본 슬라이드’ 버튼으로 사진 원본을 확인할 수 있습니다. 맨 오른쪽 <b>🖼️ 원본 사진 주루룩</b> 탭을 누르면 원본 107장이 번호 순서대로 한 페이지에 이어집니다. 표의 수치는 사진에 적힌 값 그대로이며, 슬라이드에 없는 값은 넣지 않았습니다.</p>
     <div class="chips">
       <span class="chip">1차 <b id="cnt">0</b>장</span>
       <span class="chip">2차 <b>58</b>장</span>
@@ -381,6 +401,7 @@ html:not(.locked) .lockbtn{display:inline-block}
     <div class="lects" id="lects" role="tablist" aria-label="강연 선택">
       <button class="ltab on" type="button" role="tab" data-lec="1" aria-selected="true">📘 1차 · 수성구 고1 내신·수행평가<span class="n">49</span></button>
       <button class="ltab" type="button" role="tab" data-lec="2" aria-selected="false">📗 2차 · 학생부 구조·합격 사례·수행평가<span class="n">58</span></button>
+      <button class="ltab" type="button" role="tab" data-lec="3" aria-selected="false">🖼️ 원본 사진 주루룩<span class="n">107</span></button>
     </div>
   </div>
   <nav class="tabs" id="tabs" role="tablist" aria-label="1차 강연 부 선택"></nav>
@@ -391,7 +412,7 @@ html:not(.locked) .lockbtn{display:inline-block}
 
 <footer class="foot">
   <div class="wrap">
-    <p><b>출처</b> · 1차 강연 PPT 촬영 사진 49장 + 2차 강연 PPT 촬영 사진 58장 (합계 107장). 각 항목의 ‘▣ 원본 슬라이드’ 버튼으로 해당 사진을 확인할 수 있습니다.</p>
+    <p><b>출처</b> · 1차 강연 PPT 촬영 사진 49장 + 2차 강연 PPT 촬영 사진 58장 (합계 107장). 각 항목의 ‘▣ 원본 슬라이드’ 버튼으로 해당 사진을 확인할 수 있고, 맨 오른쪽 <b>🖼️ 원본 사진 주루룩</b> 탭에서는 107장을 번호 순서대로 한 페이지에 이어 볼 수 있습니다.</p>
     <p><b>1차 강연에서 아직 반영되지 않은 장</b> · 1~2, 4~6, 10~14, 22, 26~27, 29~30, 35, 37~44, 50, 57~64, 66, 69, 73, 77, 84~88, 91 (43장). 사진을 주시면 같은 페이지에 이어서 반영합니다.</p>
     <p>이 페이지는 고입 설명회 자료를 정리한 것으로, 실제 학교 공고 원문과 다를 수 있습니다. 지원 전에는 각 학교의 공고문을 확인하세요.</p>
     <p><button class="footlock" type="button" data-lock>🔒 이 기기에서 잠그기 (비밀번호 다시 묻기)</button></p>
@@ -2082,12 +2103,75 @@ function renderPart2(pid){
     main.innerHTML=renderPart2(t);
     window.scrollTo({top:0,behavior:'instant'});
   }
+
+  /* ── 🖼️ 원본 사진 주루룩 보기 ─────────────────────────────── */
+  var PHOTO_FILTER='all';
+  function fileOf(s){return s.photo?('img/'+s.photo):('img/s'+s.id+'.jpg')}
+  function fileOf2(s){return s.photo?('img/'+s.photo):('img/b2_s'+String(s.id).padStart(2,'0')+'.jpg')}
+  function photoItems(lec){
+    var out=[];
+    if(lec!=='2')SLIDES.slice().sort(function(a,b){return a.id-b.id}).forEach(function(s){
+      out.push({lec:1,id:s.id,title:plain(s.title),src:fileOf(s)});
+    });
+    if(lec!=='1')SLIDES2.slice().sort(function(a,b){return a.id-b.id}).forEach(function(s){
+      out.push({lec:2,id:s.id,title:plain(s.title),src:fileOf2(s)});
+    });
+    return out;
+  }
+  function fchip(v,label,n){
+    var on=PHOTO_FILTER===v;
+    return '<button class="pf'+(on?' on':'')+'" type="button" data-pf="'+v+'" aria-pressed="'+(on?'true':'false')+'">'+label+'<span class="n">'+n+'</span></button>';
+  }
+  function renderPhotos(lec){
+    var items=photoItems(lec);
+    var h='<div class="parthead"><span class="lbl">🖼️ 원본 사진</span><h2>원본 사진 주루룩 보기</h2>'
+      +'<p>1차 <b>49</b>장 → 2차 <b>58</b>장, 모두 <b>107</b>장을 슬라이드 번호 순서대로 이어 붙였습니다.</p></div>'
+      +'<div class="pfilters" role="group" aria-label="강연 고르기">'
+      +fchip('all','전체',SLIDES.length+SLIDES2.length)
+      +fchip('1','1차',SLIDES.length)
+      +fchip('2','2차',SLIDES2.length)
+      +'</div>'
+      +'<p class="pnote">사진을 누르면 크게 볼 수 있습니다. 화면에 가까워질 때만 사진을 불러오므로 모바일에서도 끊기지 않습니다.</p>'
+      +'<div class="pstrip">';
+    [[1,'1차 · 수성구 고1 내신·수행평가'],[2,'2차 · 학생부 구조·합격 사례·수행평가']].forEach(function(g){
+      var sub=items.filter(function(it){return it.lec===g[0]});
+      if(!sub.length)return;
+      h+='<div class="pgroup">'+g[1]+'<span class="c">'+sub.length+'장</span></div>';
+      h+=sub.map(function(it){
+        var cap=it.lec+'차 · '+it.id+'쪽'+(it.title?' · '+it.title:'');
+        var alt='슬라이드 '+it.id+(it.title?' · '+it.title:'');
+        return '<figure class="pitem">'
+          +'<div class="pcap"><span class="pwho'+(it.lec===2?' b2':'')+'">'+it.lec+'차</span>'
+          +'<span class="pno">'+it.id+'쪽</span>'
+          +(it.title?'<span class="pttl">'+esc2(it.title)+'</span>':'')+'</div>'
+          +'<button class="pimg" type="button" data-photo="'+esc2(it.src)+'" data-cap="'+esc2(cap)+'" aria-label="'+esc2(alt+' 크게 보기')+'">'
+          +'<img src="'+esc2(it.src)+'" alt="'+esc2(alt)+'" width="1400" height="1050" loading="lazy" decoding="async">'
+          +'</button></figure>';
+      }).join('');
+    });
+    return h+'</div>';
+  }
+  function setPhotoFilter(f){
+    PHOTO_FILTER=f;
+    main.innerHTML=renderPhotos(f);
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  /* 필터 버튼은 화면을 다시 그릴 때마다 새로 생기므로 main에서 위임해 받습니다 */
+  main.addEventListener('click',function(e){
+    var b=e.target&&e.target.closest?e.target.closest('[data-pf]'):null;
+    if(!b)return;
+    if(document.documentElement.getAttribute('data-lec')!=='3')return;
+    setPhotoFilter(b.getAttribute('data-pf'));
+  });
+
   function setLec(n){
     lects.querySelectorAll('.ltab').forEach(function(b){var on=b.dataset.lec===String(n);b.classList.toggle('on',on);b.setAttribute('aria-selected',on?'true':'false')});
-    tabs1.hidden=(n===2);
+    tabs1.hidden=(n!==1);
     tabs2.hidden=(n!==2);
     document.documentElement.setAttribute('data-lec',String(n));
-    if(n===1){window.setTab(last1)}else{setTab2(last2)}
+    if(n===1){window.setTab(last1)}
+    else if(n===2){setTab2(last2)}
+    else{setPhotoFilter(PHOTO_FILTER)}
   }
   var origSetTab=window.setTab;
   window.setTab=function(t){last1=t;return origSetTab(t)};
