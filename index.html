@@ -163,6 +163,8 @@ td .k{color:var(--teal);font-weight:800}
 
 /* ── 잠금 화면 ───────────────────────────────────────────── */
 html.locked{overflow:hidden}
+/* 잠긴 동안에는 본문을 화면·화면읽기 어디에도 드러내지 않음 */
+html.locked body>*:not(.lock){visibility:hidden!important}
 .lock{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:22px;
   background:linear-gradient(155deg,#0e6f61 0%,#0a4f46 55%,#06322d 100%)}
 .lock.on{display:flex}
