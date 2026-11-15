@@ -242,17 +242,18 @@ mark{background:#fff1bf;color:#7a3a00;padding:0 1px;border-radius:2px;font-weigh
 
 /* 인용 + 오른쪽 태그 */
 .qside{display:grid;gap:12px}
+.qside>*{align-self:start}
 @media(min-width:820px){.qside{grid-template-columns:1.5fr 1fr;align-items:start}}
 .sideTags .tagrow{margin-top:0;grid-template-columns:1fr!important}
 
 /* 비교 표(약한 설명 → 학습이 드러나는 설명) */
 .cmp{display:grid;gap:7px}
 .cmphead{display:none}
+.cmprow{display:grid;gap:6px;grid-template-columns:1fr}
 @media(min-width:720px){
  .cmphead{display:grid;grid-template-columns:92px 1fr 18px 1fr;gap:8px;font-size:11.4px;font-weight:800;color:var(--muted);padding:0 0 2px}
  .cmprow{grid-template-columns:92px 1fr 18px 1fr;align-items:center;gap:8px}
 }
-.cmprow{display:grid;gap:6px;grid-template-columns:1fr}
 .ck{background:#1d2b31;color:#fff;border-radius:7px;padding:7px 9px;font-size:11.9px;font-weight:800;line-height:1.35}
 .cw{background:#f2f4f5;border-radius:7px;padding:8px 10px;font-size:12.4px;color:#5b6b72;line-height:1.5}
 .ar{text-align:center;color:var(--teal);font-weight:900}
@@ -266,11 +267,11 @@ mark{background:#fff1bf;color:#7a3a00;padding:0 1px;border-radius:2px;font-weigh
 /* 개념 → 질문 흐름 */
 .flows{display:grid;gap:8px}
 .flowhead{display:none}
+.flowrow{display:grid;grid-template-columns:1fr;gap:6px;background:#fbfdfd;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
 @media(min-width:720px){
  .flowhead{display:grid;grid-template-columns:104px 1fr 1.35fr;gap:8px;font-size:11.4px;font-weight:800;color:var(--muted);margin-bottom:-4px}
  .flowrow{grid-template-columns:104px 1fr 1.35fr;align-items:center}
 }
-.flowrow{display:grid;grid-template-columns:1fr;gap:6px;background:#fbfdfd;border:1px solid var(--line);border-radius:10px;padding:9px 10px}
 .fk{font-weight:800;color:var(--teal-d);font-size:12.5px}
 .fmid{font-size:12.5px;color:#31454d}
 .fq{font-size:12.9px;font-weight:700;color:#1b3a3d;background:var(--teal-bg);border-radius:6px;padding:7px 9px;line-height:1.5}
@@ -2098,7 +2099,11 @@ function renderPart2(pid){
   try{
     var ids2=SLIDES2.map(function(s){return s.id});
     var el=document.getElementById('rangeList');
-    if(el&&typeof ranges==='function') el.textContent=ranges(SLIDES.map(function(s){return s.id}))+' / 2차 '+ranges2(ids2);
+    if(el&&typeof ranges==='function'){
+      var a1=SLIDES.map(function(s){return s.id}).sort(function(x,y){return x-y});
+      var a2=ids2.slice().sort(function(x,y){return x-y});
+      el.textContent='1차 '+a1[0]+'~'+a1[a1.length-1]+' · 2차 '+a2[0]+'~'+a2[a2.length-1];
+    }
   }catch(e){}
 })();
 </script>
